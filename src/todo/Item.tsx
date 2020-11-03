@@ -11,7 +11,7 @@ const Coffee: React.FC<ItemPropsExt> = ({ id, name, quantity,  onEdit }) => {
 
     return (
          <IonItem onClick={() => onEdit(id)}>
-            <IonLabel> {name} {quantity} </IonLabel>
+            <IonLabel> {name} {quantity}ml </IonLabel>
          </IonItem>
     );
 };
