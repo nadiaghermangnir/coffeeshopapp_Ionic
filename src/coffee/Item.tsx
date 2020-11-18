@@ -7,11 +7,11 @@ interface ItemPropsExt extends ItemProps {
     onEdit: (id?: string) => void;
 }
 
-const Coffee: React.FC<ItemPropsExt> = ({ id, name, quantity,  onEdit }) => {
+const Coffee: React.FC<ItemPropsExt> = ({ id, name, quantity, withCaffeine,  onEdit }) => {
 
     return (
          <IonItem onClick={() => onEdit(id)}>
-            <IonLabel> {name} {quantity}ml </IonLabel>
+            <IonLabel color="primary"> {name} {quantity}ml {withCaffeine}</IonLabel>
          </IonItem>
     );
 };

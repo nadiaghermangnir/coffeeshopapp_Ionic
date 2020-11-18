@@ -26,7 +26,7 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Nadia's Coffee Shop</IonTitle>
+                    <IonTitle color="secondary">Nadia's Coffee Shop</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent>
@@ -34,7 +34,9 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
                 {items && (
                     <IonList>
                         {items.map(({ id, name, quantity, available, withCaffeine}) =>
-                            <Coffee key={id} id={id} name={name} quantity={quantity} available={available} withCaffeine={withCaffeine} onEdit={id => history.push(`/item/${id}`)} />)}
+                            <Coffee id={id} name={name} quantity={quantity}
+                                    available={available} withCaffeine={withCaffeine}
+                                    onEdit={id => history.push(`/item/${id}`)} />)}
                     </IonList>
                 )}
                 {fetchingError && (

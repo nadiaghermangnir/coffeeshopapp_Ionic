@@ -3,6 +3,6 @@ export interface ItemProps{
     name: string;
     quantity: number;
     available?: Date;
-    withCaffeine?: boolean;
+    withCaffeine: boolean;
 
 }
