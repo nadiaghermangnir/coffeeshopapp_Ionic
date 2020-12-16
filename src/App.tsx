@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import {ItemList} from "./coffee";
+import {ItemList} from "./todo";
 
 
 /* Core CSS required for Ionic components to work properly */
@@ -23,8 +23,9 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import ItemModify from "./coffee/ItemModify";
-import {ItemProvider} from "./coffee/ItemProvider";
+import ItemModify from "./todo/ItemModify";
+import {ItemProvider} from "./todo/ItemProvider";
+import {AuthProvider, Login, PrivateRoute} from "./auth";
 
 
 const App: React.FC = () => (
@@ -32,10 +33,17 @@ const App: React.FC = () => (
       <ItemProvider>
         <IonReactRouter>
           <IonRouterOutlet>
-              <Route path="/items" component={ItemList} exact={true} />
-              <Route path="/item" component={ItemModify} exact={true} />
-              <Route path="/item/:id" component={ItemModify} exact={true} />
-              <Route exact path="/" render={() => <Redirect to="/items" />} />
+
+                  <AuthProvider>
+                      <Route path="/login" component={Login} exact={true}/>
+                      <ItemProvider>
+                          <PrivateRoute path="/items" component={ItemList} exact={true} />
+                          <PrivateRoute path="/item" component={ItemModify} exact={true} />
+                          <PrivateRoute path="/item/:id" component={ItemModify} exact={true} />
+                      </ItemProvider>
+                      <Route exact path="/" render={() => <Redirect to="/items" />} />
+                  </AuthProvider>
+
           </IonRouterOutlet>
         </IonReactRouter>
       </ItemProvider>
