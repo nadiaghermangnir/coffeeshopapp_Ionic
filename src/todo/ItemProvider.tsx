@@ -360,7 +360,7 @@ export const ItemProvider: React.FC<ItemProviderProps> = ({children}) => {
             log("wsEffect - connecting");
             let closeWebSocket: () => void;
             if (token?.trim()) {
-                closeWebSocket = newWebSocket(token, (message) => {
+                closeWebSocket = newWebSocket(token, message => {
                     if (canceled) {
                         return;
                     }

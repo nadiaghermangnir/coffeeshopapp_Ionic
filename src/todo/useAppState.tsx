@@ -24,6 +24,6 @@ export const useAppState = () => {
                 setAppState(state);
             }
         }
-    }, [])
+    }, []);
     return { appState };
 };

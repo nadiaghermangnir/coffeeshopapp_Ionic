@@ -6,7 +6,6 @@ import { Plugins } from "@capacitor/core";
 const {Storage} = Plugins;
 
 
-const log = getLogger('itemApi');
 const itemUrl = `http://${baseUrl}/api/item`;
 
 
@@ -24,7 +23,10 @@ export const getItems: (token:string) => Promise<ItemProps[]> = (token)  => {
                     quantity: item.quantity,
                     available: item.available,
                     withCaffeine: item.withCaffeine,
-                    userId: item.userId
+                    userId: item.userId,
+                    imgPath:item.imgPath,
+                    latitude:item.latitude,
+                    longitude:item.longitude
                 }),
             });
         });
@@ -49,7 +51,10 @@ export const createItem: (
                 quantity: item.quantity,
                 available: item.available,
                 withCaffeine: item.withCaffeine,
-                userId: item.userId
+                userId: item.userId,
+                imgPath:item.imgPath,
+                latitude:item.latitude,
+                longitude:item.longitude
             }),
 
         });
@@ -73,7 +78,10 @@ export const updateItem: (
                 quantity: item.quantity,
                 available: item.available,
                 withCaffeine: item.withCaffeine,
-                userId: item.userId
+                userId: item.userId,
+                imgPath:item.imgPath,
+                latitude:item.latitude,
+                longitude:item.longitude
             }),
         });
     });
@@ -120,7 +128,7 @@ interface MessageData {
     payload: ItemProps;
 }
 
-
+const log = getLogger('ws');
 
 export const newWebSocket = (token: string, onMessage: (data: MessageData) => void) => {
     const ws = new WebSocket(`ws://${baseUrl}`);

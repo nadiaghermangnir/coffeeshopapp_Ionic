@@ -10,7 +10,8 @@ import {
     IonPage,
     IonTitle,
     IonToolbar,
-    IonLoading, IonSearchbar, IonSelect, IonSelectOption, IonInfiniteScroll, IonInfiniteScrollContent
+    IonLoading, IonSearchbar, IonSelect, IonSelectOption, IonInfiniteScroll, IonInfiniteScrollContent,
+    createAnimation
 } from '@ionic/react';
 import { add } from 'ionicons/icons';
 import Coffee from './Item';
@@ -26,7 +27,6 @@ const log = getLogger('ItemList');
 
 const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
 
-    const {appState} = useAppState();
     const {networkStatus} = useNetwork();
 
     const { items, fetching, fetchingError, updateServer } = useContext(ItemContext);
@@ -113,12 +113,30 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
         }
     }, [search, items]);
 
+    useEffect(() => {
+
+        async function basicAnimation() {
+            const element = document.getElementsByClassName("buttonAdd");
+            if (element) {
+                const animation = createAnimation()
+                    .addElement(element[0])
+                    .duration(3000)
+                    .iterations(1)
+                    .fromTo('transform', 'translateX(300px)', 'translateX(0px)')
+                    .fromTo('opacity', '0', '1.5');
+
+                animation.play();
+            }
+        }
+        basicAnimation();
+    }, []);
+
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
                     <IonTitle color="secondary">Nadia's Coffee Shop</IonTitle>
-                    <IonButton onClick={handleLogout}>Logout</IonButton>
+                    <IonButton onClick={handleLogout} slot={"end"}>Logout</IonButton>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
@@ -163,6 +181,9 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
                             userId={item.userId}
                             status={item.status}
                             version={item.version}
+                            imgPath={item.imgPath}
+                            latitude={item.latitude}
+                            longitude={item.longitude}
                             onEdit={(id) => history.push(`/item/${id}`)}
                             />
                     );
@@ -178,7 +199,7 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
                     <div>{fetchingError.message || 'Failed to fetch items'}</div>
                 )}
                 <IonFab vertical="bottom" horizontal="end" slot="fixed">
-                    <IonFabButton onClick={() => history.push('/item')}>
+                    <IonFabButton className="buttonAdd" onClick={() => history.push('/item')}>
                         <IonIcon icon={add} />
                     </IonFabButton>
                 </IonFab>

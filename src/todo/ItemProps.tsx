@@ -7,4 +7,7 @@ export interface ItemProps{
     userId: string;
     status:number;
     version:number;
+    imgPath:string,
+    latitude:number,
+    longitude:number
 }
